@@ -4,7 +4,7 @@ This is the C driver code for ADXL382 sensor. The MCU used is raspberry pi pico.
 In the main.c, ADXL382 is set up to operate in High performance mode, 8kHz bandwidth and sampling rate (output data rate) at 16KHz.
 
 # Connect Pico to ADXL382
-GPIO 16 (pin 21) MISO/spi0_rx-> SDO/SDO on adxl382 board
+GPIO 16 (pin 21) MISO/spi0_rx-> SDO/SDO on adxl382 board \n
 GPIO 17 (pin 22) Chip select -> CSB/!CS on adxl382 board
 GPIO 18 (pin 24) SCK/spi0_sclk -> SCL/SCK on adxl382 board
 GPIO 19 (pin 25) MOSI/spi0_tx -> SDA/SDI on adxl382 board
