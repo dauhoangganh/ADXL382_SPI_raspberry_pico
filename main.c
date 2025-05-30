@@ -28,7 +28,7 @@
    GPIO 17 (pin 22) Chip select -> CSB/!CS on adxl382 board
    GPIO 18 (pin 24) SCK/spi0_sclk -> SCL/SCK on adxl382 board
    GPIO 19 (pin 25) MOSI/spi0_tx -> SDA/SDI on adxl382 board
-   3.3v (pin 36) -> 3V3 pin on adxl382 board
+   3.3v (pin 36) -> VS & VDDIO pin on adxl382 board
    GND (pin 38)  -> GND on adxl382 board
 
    Note: SPI devices can have a number of different naming schemes for pins. See
