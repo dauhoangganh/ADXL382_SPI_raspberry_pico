@@ -8,7 +8,7 @@ GPIO 16 (pin 21) MISO/spi0_rx-> SDO/SDO on adxl382 board  <br>
 GPIO 17 (pin 22) Chip select -> CSB/!CS on adxl382 board <br>
 GPIO 18 (pin 24) SCK/spi0_sclk -> SCL/SCK on adxl382 board <br>
 GPIO 19 (pin 25) MOSI/spi0_tx -> SDA/SDI on adxl382 board <br>
-3.3v (pin 36) -> 3V3 pin on adxl382 board <br>
+3.3v (pin 36) -> VS & VDDIO pin on adxl382 board <br>
 GND (pin 38)  -> GND on adxl382 board <br>
 
 # Deploy the binary file main.uf2 to Pico
