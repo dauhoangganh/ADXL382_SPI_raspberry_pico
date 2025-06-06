@@ -46,29 +46,30 @@ static const uint8_t adxl38x_scale_mul[3] = {1, 2, 4};
 
 #ifdef PICO_DEFAULT_SPI_CSN_PIN
 static inline void cs_select(void) {
-	__asm__ volatile("nop \n nop \n nop");
+	// __asm__ volatile("nop \n nop \n nop");
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 0);  // Active low
-	__asm__ volatile("nop \n nop \n nop");
+	// __asm__ volatile("nop \n nop \n nop");
 }
 
 static inline void cs_deselect(void) {
-	asm volatile("nop \n nop \n nop");
+	// asm volatile("nop \n nop \n nop");
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
-	asm volatile("nop \n nop \n nop");
+	// asm volatile("nop \n nop \n nop");
 }
 #endif
 
 #if defined(spi_default) && defined(PICO_DEFAULT_SPI_CSN_PIN)
 int write_register(uint8_t reg, const uint8_t *data, uint8_t len) {
 	uint8_t buf[len + 1];
-	buf[0] = (reg << 1) & 0x00;  // Remove read bit as this is a write, only the last 7 bits of register address are used, the register address is followed by R/W bit
+	buf[0] = (reg << 1) | 0x00;  // Remove read bit as this is a write, only the last 7 bits of register address are used, the register address is followed by R/W bit
 	for (uint8_t i = 0; i < len; i++) {
 		buf[i + 1] = data[i];
 	}
-	cs_select();
+	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 0);
+	// sleep_us(1);
 	int ret = spi_write_blocking(spi_default, buf, len + 1);
-	cs_deselect();
-	// sleep_ms(10);
+	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
+	// sleep_us(1);
 	return ret == len + 1 ? 0 : -1;  // Return 0 on success, -1 on failure
 }
 int read_register(uint8_t reg, uint8_t len, uint8_t *buf ) {
@@ -76,16 +77,21 @@ int read_register(uint8_t reg, uint8_t len, uint8_t *buf ) {
 	// first, then subsequently read from the device. The register is auto incrementing
 	// so we don't need to keep sending the register we want, just the first.
 	reg = (reg <<1) | 0x01;  // set read bit
-	cs_select();
+	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 0);
+	// printf("CS low\n");
+	// sleep_us(1);
 	int ret = spi_write_blocking(spi_default, &reg, 1);
 	if (ret != 1) {
-		cs_deselect();
+		printf("Error: Could not write register address\n");
+		gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
+		sleep_us(1);
 		return -1;  // Return -1 on failure
 	}
 	// sleep_ms(10);
 	ret = spi_read_blocking(spi_default, 0, buf, len);
-	cs_deselect();
-	// sleep_ms(10);
+	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
+	// printf("CS high\n");
+	// sleep_us(1);
 	return ret == len ? 0 : -1;  // Return 0 on success, -1 on failure
 }
 
@@ -104,25 +110,30 @@ int adxl38x_init()
 	int ret;
 	uint8_t reg_value;
 
+	
 	ret = read_register(ADXL38X_DEVID_AD,
-				       1, &reg_value);
+					1, &reg_value);
 	printf("Device ID: %X\n", reg_value);
-	if (ret || (reg_value != ADXL38X_RESET_DEVID_AD))
+	// sleep_ms(100);  // Wait for 1ms before retrying
+	
+	if (ret || (reg_value != ADXL38X_RESET_DEVID_AD)) {
 		printf("Error: Couldnt read device ID or Device ID does not match 0xAD\n");
-		//return -1;
+		return -1;
+	}
 	ret = read_register(ADXL38X_DEVID_MST,
 				       1, &reg_value);
 	printf("MEMS ID: %X\n", reg_value);
-	if (ret || (reg_value != ADXL38X_RESET_DEVID_MST))
+	if (ret || (reg_value != ADXL38X_RESET_DEVID_MST)) {
 		printf("Error: Couldnt read DEVID_MST or MEMS devices ID does not match 0x1D\n");
-		//return -1;
+		return -1;
+	}
 	ret = read_register(ADXL38X_PART_ID,
 				       1, &reg_value);
 	printf("Part ID: %X\n", reg_value);
-	if (ret || (reg_value != ADXL38X_RESET_PART_ID))
+	if (ret || (reg_value != ADXL38X_RESET_PART_ID)) {
 		printf("Error: Couldnt read partID\n");
 		return -1;
-
+	}
 	return 0;
 
 
@@ -149,9 +160,10 @@ int adxl38x_soft_reset()
 	sleep_us(500);
 	ret = read_register(ADXL38X_DEVID_AD, 1, &reg_value);
 	printf("Device ID: %X\n", reg_value);
-	// if (reg_value != 0xAD)
-	// 	printf("Error: Device ID does not match 0xAD\n");
-	// 	return -EAGAIN;
+	if (reg_value != 0xAD) {
+		printf("Error: Device ID does not match 0xAD\n");
+		return -EAGAIN;
+	}
 
 	return 0;
 }
@@ -257,7 +269,7 @@ int adxl38x_accel_set_FIFO(uint16_t num_samples,
 	
 
 	// building data for FIFO_CFG0 register
-	fifo_samples_high = (uint8_t) num_samples >> 8;
+	fifo_samples_high = (uint8_t) (num_samples >> 8);
 	fifo_samples_high = fifo_samples_high & 0x01;
 	write_data = fifo_samples_high;
 
@@ -327,7 +339,7 @@ int adxl38x_data_raw_to_gees(uint8_t *raw_accel_data,
 	int ret;
 	uint16_t data = 0;
 
-	data = raw_accel_data[0] | ((uint16_t)raw_accel_data[1] << 8);
+	data = raw_accel_data[1] | ((uint16_t)raw_accel_data[0] << 8);
 	data_frac->integer = no_os_div_s64_rem((int64_t)adxl38x_accel_conv(data, range_val),
 					       ADXL38X_ACC_SCALE_FACTOR_GEE_DIV, &(data_frac->fractional));
 
