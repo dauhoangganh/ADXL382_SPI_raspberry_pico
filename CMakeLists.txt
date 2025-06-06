@@ -34,21 +34,18 @@ project(adxl382_spi C CXX ASM)
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
-if (TARGET tinyusb_device) # check if tinyusb is available
-    add_executable(adxl382_spi
-            adxl382.c
-            main.c
-            )
-    #enable uart and usb port
-    pico_enable_stdio_uart(adxl382_spi 0)
-    pico_enable_stdio_usb(adxl382_spi 1)
-    # pull in common dependencies and additional spi hardware support
-    target_link_libraries(adxl382_spi pico_stdlib hardware_spi)
 
-    # create map/bin/hex file etc.
-    pico_add_extra_outputs(adxl382_spi)
+add_executable(adxl382_spi
+        adxl382.c
+        main.c     
+        )
+#enable uart and usb port
+pico_enable_stdio_uart(adxl382_spi 0)
+pico_enable_stdio_usb(adxl382_spi 1)
+# pull in common dependencies and additional spi hardware support
+target_link_libraries(adxl382_spi pico_stdlib hardware_spi)
+
+# create map/bin/hex file etc.
+pico_add_extra_outputs(adxl382_spi)
 
 # add url via pico_set_program_url
-elseif(PICO_ON_DEVICE)
-    message("Skipping adxl382_spi because TinyUSB submodule is not initialized in the SDK")
-endif()
