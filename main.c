@@ -55,7 +55,7 @@ uint8_t status0;
 uint8_t fifo_status[2];
 uint8_t fifo_data[954];
 uint16_t set_fifo_entries = 0x3C; //  60 entries in FIFO
-// uint16_t set_fifo_entries = 0x0C; //  12 entries in FIFO
+// uint16_t set_fifo_entries = 0x5A; //  90 entries in FIFO
 uint16_t fifo_entries = 2;
 bool chID_enable = true; //FIFO channel id
 uint8_t fifo_read_bytes;
@@ -223,16 +223,16 @@ int main() {
            
             // DEBUG_PRINT("FIFO data:\n");
             // print raw fifo data
-            // for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += fifo_read_bytes) {
-            //     DEBUG_PRINT("%X : 0x%02X 0x%02X\n", fifo_data[b], fifo_data[b+1], fifo_data[b+2]);
-            // }
-			for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += 3) {
-				ret = adxl38x_data_raw_to_gees((fifo_data + b + 1), data_frac, ADXL382_RANGE_15G);
-				if (ret)
-					goto error;
-				STREAM_PRINT("%c : %lld.%04d\n", getaxis(fifo_data[b]), data_frac->integer,
-					labs(data_frac->fractional));
-			}
+            for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += fifo_read_bytes) {
+                DEBUG_PRINT("%c %02X%02X\n", getaxis(fifo_data[b]), fifo_data[b+1], fifo_data[b+2]);
+            }
+			// for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += 3) {
+			// 	ret = adxl38x_data_raw_to_gees((fifo_data + b + 1), data_frac, ADXL382_RANGE_15G);
+			// 	if (ret)
+			// 		goto error;
+			// 	STREAM_PRINT("%c : %lld.%04d\n", getaxis(fifo_data[b]), data_frac->integer,
+			// 		labs(data_frac->fractional));
+			// }
 		}
 		
 	}
