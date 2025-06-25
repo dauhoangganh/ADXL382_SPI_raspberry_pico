@@ -1,7 +1,7 @@
 /***************************************************************************//**
  *   @file   adxl38x.c
  *   @brief  Implementation of ADXL38X Driver.
- *   @author Balarupini Rajendran (balarupini.rajendran@analog.com)
+ *   @author Anh Do (anh.do@analog.com)
 ********************************************************************************
  * Copyright 2024(c) Analog Devices, Inc.
  *
