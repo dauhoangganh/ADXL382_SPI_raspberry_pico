@@ -1,5 +1,5 @@
 # ninja log v6
-131	1766	7696890282482330	build.ninja	78c69d6e08e7c712
+14	7753	7725310926879354	build.ninja	78c69d6e08e7c712
 91	461	7695068480486788	pico-sdk/src/rp2040/boot_stage2/CMakeFiles/bs2_default.dir/compile_time_choice.S.obj	4fefa8b752ecbd9b
 2302	4061	7695068503528425	CMakeFiles/main.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/common/pico_time/time.c.obj	e0a203726bbb273b
 466	922	7695068484251436	pico-sdk/src/rp2040/boot_stage2/bs2_default.elf	da4f49845bae95c4
@@ -81,10 +81,10 @@
 109	1395	7696014719025054	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/pico_stdlib/stdlib.c.obj	3b792ed256d8d6c
 323	1422	7696014721125994	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/common/pico_sync/lock_core.c.obj	854a689074b5590f
 204	1549	7696014719968436	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/hardware_sync_spin_lock/sync_spin_lock.c.obj	3e71bba814016ebd
-90	1637	7696014718810027	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
+102	702	7719253387215219	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
 127	1694	7696014719175217	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/hardware_gpio/gpio.c.obj	b9d97f08fe271644
 217	1736	7696014720099997	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/hardware_irq/irq.c.obj	118a671813ff827a
-78	1836	7696014718715104	CMakeFiles/adxl382_spi.dir/adxl382.c.obj	95f8764989109a5f
+71	320	7706374259770461	CMakeFiles/adxl382_spi.dir/adxl382.c.obj	95f8764989109a5f
 1283	2022	7696014730766798	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/common/pico_sync/critical_section.c.obj	3b2e50a784461570
 1318	2060	7696014731115384	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/common/pico_time/timeout_helper.c.obj	aad576a871ab7b13
 1333	2289	7696014731266119	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/hardware_timer/timer.c.obj	ea45a2b0c2cc1092
@@ -150,9 +150,4 @@
 6401	7242	7696014781945417	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/lib/tinyusb/src/tusb.c.obj	37a80861deb67dce
 6673	7263	7696014784603095	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj	4ec9dfbc36101fde
 6486	7355	7696014782764089	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/lib/tinyusb/src/common/tusb_fifo.c.obj	97500c44ad095146
-7356	15491	7696014791427543	adxl382_spi.elf	d1155822f2b8d356
-172	574	7696925738091589	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
-147	608	7696925737827379	CMakeFiles/adxl382_spi.dir/adxl382.c.obj	95f8764989109a5f
-609	2711	7696925742438945	adxl382_spi.elf	d1155822f2b8d356
-90	404	7696926638004301	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
-407	1194	7696926641165271	adxl382_spi.elf	d1155822f2b8d356
+703	1718	7719253393190467	adxl382_spi.elf	d1155822f2b8d356

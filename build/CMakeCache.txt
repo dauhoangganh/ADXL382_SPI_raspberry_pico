@@ -17,6 +17,9 @@
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-addr2line.exe
 
+//Path to a program.
+CMAKE_AR:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-ar.exe
+
 //ASM compiler
 CMAKE_ASM_COMPILER:STRING=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc.exe
 
@@ -74,7 +77,15 @@ CMAKE_CXX_FLAGS_RELEASE:STRING=-g -O3 -DNDEBUG
 CMAKE_CXX_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 
 //C compiler
-CMAKE_C_COMPILER:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc.exe
+CMAKE_C_COMPILER:STRING=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc.exe
+
+//A wrapper around 'ar' adding the appropriate '--plugin' option
+// for the GCC compiler
+CMAKE_C_COMPILER_AR:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc-ar.exe
+
+//A wrapper around 'ranlib' adding the appropriate '--plugin' option
+// for the GCC compiler
+CMAKE_C_COMPILER_RANLIB:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-gcc-ranlib.exe
 
 //Flags used by the C compiler during all build types.
 CMAKE_C_FLAGS:STRING=-mcpu=cortex-m0plus -mthumb
@@ -118,6 +129,9 @@ CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/HDo/Documents/Motor_fault_detec
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/adxl382_spi
 
+//Path to a program.
+CMAKE_LINKER:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-ld.exe
+
 //Program used to build from build.ninja files.
 CMAKE_MAKE_PROGRAM:FILEPATH=C:/Users/HDo/.pico-sdk/ninja/v1.12.1/ninja.exe
 
@@ -156,6 +170,9 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=adxl382_spi
+
+//Path to a program.
+CMAKE_RANLIB:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-ranlib.exe
 
 //Path to a program.
 CMAKE_READELF:FILEPATH=C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/arm-none-eabi-readelf.exe
@@ -332,6 +349,8 @@ pico_sdk_SOURCE_DIR:STATIC=C:/Users/HDo/.pico-sdk/sdk/2.1.1
 
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_AR
+CMAKE_AR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ASM_COMPILER
 CMAKE_ASM_COMPILER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ASM_COMPILER_AR
@@ -381,6 +400,12 @@ CMAKE_CXX_FLAGS_MINSIZEREL-ADVANCED:INTERNAL=1
 CMAKE_CXX_FLAGS_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_CXX_FLAGS_RELWITHDEBINFO
 CMAKE_CXX_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER
+CMAKE_C_COMPILER-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_AR
+CMAKE_C_COMPILER_AR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_C_COMPILER_RANLIB
+CMAKE_C_COMPILER_RANLIB-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS
 CMAKE_C_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_C_FLAGS_DEBUG
@@ -422,6 +447,8 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=C:/Users/HDo/Documents/Motor_fault_detection/adxl382_spi
+//ADVANCED property for variable: CMAKE_LINKER
+CMAKE_LINKER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MAKE_PROGRAM
 CMAKE_MAKE_PROGRAM-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MODULE_LINKER_FLAGS
@@ -444,6 +471,8 @@ CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 CMAKE_OBJDUMP-ADVANCED:INTERNAL=1
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
+//ADVANCED property for variable: CMAKE_RANLIB
+CMAKE_RANLIB-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_READELF
 CMAKE_READELF-ADVANCED:INTERNAL=1
 //Path to CMake installation.

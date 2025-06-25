@@ -1,4 +1,5 @@
 {
+    "cmake.showSystemKits": false,
     "cmake.options.statusBarVisibility": "hidden",
     "cmake.options.advanced": {
         "build": {
@@ -35,9 +36,5 @@
     "raspberry-pi-pico.cmakeAutoConfigure": true,
     "raspberry-pi-pico.useCmakeTools": false,
     "raspberry-pi-pico.cmakePath": "${HOME}/.pico-sdk/cmake/v3.31.5/bin/cmake",
-    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja",
-    "files.associations": {
-        "adxl382.h": "c",
-        "cstdint": "c"
-    }
+    "raspberry-pi-pico.ninjaPath": "${HOME}/.pico-sdk/ninja/v1.12.1/ninja"
 }
