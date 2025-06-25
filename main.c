@@ -62,7 +62,8 @@ uint8_t fifo_read_bytes;
 struct adxl38x_fractional_val data_frac[15];
 static char getaxis(uint8_t chID);
 uint32_t count = 0;
-//set up led blink
+char buffer[64];
+int pos = 0;
 
 
 int main() {
@@ -172,73 +173,93 @@ int main() {
         DEBUG_PRINT("Error: Error in setting INT0_MAP0\n");
 		goto error;
     }
-	// Put the part in HP mode and read data when FIFO watermark pin is set
-	DEBUG_PRINT("Set HP mode\n");
-	ret = adxl38x_set_op_mode(ADXL38X_OP_MODE, ADXL38X_MASK_OP_MODE, ADXL38X_MODE_HP);
-	if (ret) {
-        DEBUG_PRINT("Error: Error in setting HP_MODE\n");
-		goto error;
-	}
-	else
-       DEBUG_PRINT("Device is in HP mode\n");
-            
-        
-		
 
-	DEBUG_PRINT("Starting watermark check\n");
-	while (count < 96000) { //loop until 32k x,y,z samples are obtained (2seconds at 16kHz)
-		
-		// Read status to assert if FIFO_WATERMARK bit set
-		ret = read_register(ADXL38X_STATUS0, 1, &status0);
-		if (ret)
-			goto error;
-		DEBUG_PRINT("Status 0: %x\n", status0);
-		ret = read_register(ADXL38X_FIFO_STATUS0, 2, fifo_status);
-		if (ret)
-			goto error;
-		fifo_entries = (fifo_status[0] | ((uint16_t)fifo_status[1] << 8));
-		fifo_entries = fifo_entries & 0x01ff;
+	while (true) {
+        if (stdio_usb_connected()) {
+            int c = getchar_timeout_us(1000);
+            if (c != PICO_ERROR_TIMEOUT) {
+                if (c == '\n' || c == '\r') {
+                    buffer[pos] = '\0';  // terminate string
+                    if (strcmp(buffer, "START") == 0) {
+						gpio_put(LED_PIN, 0);
+                        // Put the part in HP mode and read data when FIFO watermark pin is set
+						DEBUG_PRINT("Set HP mode\n");
+						ret = adxl38x_set_op_mode(ADXL38X_OP_MODE, ADXL38X_MASK_OP_MODE, ADXL38X_MODE_HP);
+						if (ret) {
+							DEBUG_PRINT("Error: Error in setting HP_MODE\n");
+							goto error;
+						}
+						else
+						DEBUG_PRINT("Device is in HP mode\n");
+						
+						DEBUG_PRINT("Starting watermark check\n");
+						//reset count
+						count = 0;
+						while (count < 192000) { //loop until 32k x,y,z samples are obtained (2seconds at 16kHz)
+							
+							// Read status to assert if FIFO_WATERMARK bit set
+							ret = read_register(ADXL38X_STATUS0, 1, &status0);
+							if (ret)
+								goto error;
+							// DEBUG_PRINT("Status 0: %x\n", status0);
+							ret = read_register(ADXL38X_FIFO_STATUS0, 2, fifo_status);
+							if (ret)
+								goto error;
+							fifo_entries = (fifo_status[0] | ((uint16_t)fifo_status[1] << 8));
+							fifo_entries = fifo_entries & 0x01ff;
 
-        //clear fifo_data buffer
-        memset(fifo_data, 0, sizeof(fifo_data));
+							//clear fifo_data buffer
+							memset(fifo_data, 0, sizeof(fifo_data));
 
-		// Read FIFO status and data if FIFO_WATERMARK is set
-		if (status0 & (1<<3)) {
-			count += set_fifo_entries;
-            // DEBUG_PRINT("FIFO_WATERMARK bit is set\n");
-			DEBUG_PRINT("Fifo entries =  %d\n", fifo_entries);
-			if (fifo_entries < set_fifo_entries)
-				goto unmatch_error;
+							// Read FIFO status and data if FIFO_WATERMARK is set
+							if (status0 & (1<<3)) {
+								count += set_fifo_entries;
+								// DEBUG_PRINT("FIFO_WATERMARK bit is set\n");
+								//DEBUG_PRINT("Fifo entries =  %d\n", fifo_entries);
+								if (fifo_entries < set_fifo_entries)
+									goto unmatch_error;
 
-			// Read data from FIFO (can read at least upto 12 samples * 3 bytes (chID, data))
-            if (chID_enable)
-                fifo_read_bytes = 3;
-            // DEBUG_PRINT("Reading %d bytes from FIFO\n", set_fifo_entries*fifo_read_bytes);
-			ret = read_register(ADXL38X_FIFO_DATA, set_fifo_entries*fifo_read_bytes, fifo_data);
-			if (ret)
-				goto error;
-            // DEBUG_PRINT("FIFO data read successfully\n");
-           
-			DEBUG_PRINT("Sample Count = %d\n", count);
-           
-            // DEBUG_PRINT("FIFO data:\n");
-            // print raw fifo data
-            for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += fifo_read_bytes) {
-                DEBUG_PRINT("%c %02X%02X\n", getaxis(fifo_data[b]), fifo_data[b+1], fifo_data[b+2]);
+								// Read data from FIFO (can read at least upto 12 samples * 3 bytes (chID, data))
+								if (chID_enable)
+									fifo_read_bytes = 3;
+								// DEBUG_PRINT("Reading %d bytes from FIFO\n", set_fifo_entries*fifo_read_bytes);
+								ret = read_register(ADXL38X_FIFO_DATA, set_fifo_entries*fifo_read_bytes, fifo_data);
+								if (ret)
+									goto error;
+								// DEBUG_PRINT("FIFO data read successfully\n");
+							
+								// DEBUG_PRINT("Sample Count = %d\n", count);
+							
+								// DEBUG_PRINT("FIFO data:\n");
+								// print raw fifo data
+								for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += fifo_read_bytes) {
+									DEBUG_PRINT("%02X%02X%02X\n", fifo_data[b], fifo_data[b+1], fifo_data[b+2]);
+								}
+								// for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += 3) {
+								// 	ret = adxl38x_data_raw_to_gees((fifo_data + b + 1), data_frac, ADXL382_RANGE_15G);
+								// 	if (ret)
+								// 		goto error;
+								// 	STREAM_PRINT("%c : %lld.%04d\n", getaxis(fifo_data[b]), data_frac->integer,
+								// 		labs(data_frac->fractional));
+								// }
+							}
+							
+						}
+						DEBUG_PRINT("End\n");
+						gpio_put(LED_PIN, 1);
+						//put device in standby mode
+						ret = adxl38x_set_to_standby();
+						if (ret)
+							goto error;
+                    }
+                    pos = 0;  // reset buffer
+                } else if (pos < 64 - 1) {
+                    buffer[pos++] = c;
+                }
             }
-			// for (int b = 0; b < set_fifo_entries*fifo_read_bytes; b += 3) {
-			// 	ret = adxl38x_data_raw_to_gees((fifo_data + b + 1), data_frac, ADXL382_RANGE_15G);
-			// 	if (ret)
-			// 		goto error;
-			// 	STREAM_PRINT("%c : %lld.%04d\n", getaxis(fifo_data[b]), data_frac->integer,
-			// 		labs(data_frac->fractional));
-			// }
-		}
-		
-	}
-    DEBUG_PRINT("End of while loop\n");
-    gpio_put(LED_PIN, 1);
-
+        }
+    }
+	
 error:
 	if (ret)
 		DEBUG_PRINT("Error: Error occurred!\n");
