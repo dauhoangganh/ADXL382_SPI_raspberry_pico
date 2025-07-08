@@ -10,7 +10,7 @@ GPIO 18 (pin 24) SCK/spi0_sclk -> SCL/SCK on adxl382 board <br>
 GPIO 19 (pin 25) MOSI/spi0_tx -> SDA/SDI on adxl382 board <br>
 3.3v (pin 36) -> VS & VDDIO pin on adxl382 board <br>
 GND (pin 38)  -> GND on adxl382 board <br>
-
+![connection](./images/connection.png)
 # Deploy the binary file main.uf2 to Pico
 1. Open VScode
 2. Install raspberry pi pico extension
