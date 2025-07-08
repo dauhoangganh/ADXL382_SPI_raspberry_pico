@@ -131,49 +131,7 @@ int main() {
 	}
 
         
-    ret = adxl38x_soft_reset();
-	if (ret == -EAGAIN) {
-		DEBUG_PRINT("Error: Reset was not successful\n");
-		goto error;
-	}
-	else if (ret)
-		goto error;
-	ret = adxl38x_set_range(ADXL38X_OP_MODE,ADXL38X_MASK_RANGE, ADXL382_RANGE_15G);
-	if (ret)
-		goto error;
-	else
-		DEBUG_PRINT("ADXL382 range is set to 15g\n");
-	// FIFO sequence
-	// Put the part in standby mode, All configuration register writes must be completed with the ADXL382 in standby mode
-	ret = adxl38x_set_to_standby();
-	if (ret)
-		goto error;
-	
-
-	// Set DIG_EN register to 0x78 (Enable XYZ axes and FIFO enable)
-	DEBUG_PRINT("Enable XYZ axes and FIFO\n");
-	register_value = 0x78;
-	ret = write_register(ADXL38X_DIG_EN, 
-					&register_value, 1);
-	ret = read_register(ADXL38X_DIG_EN, 1, &register_value);
-	DEBUG_PRINT("DIG_EN register value: 0x%02X\n", register_value);
-	if (ret)
-		goto error;
-
-	// Set FIFO_CFG0 to 0x60 (Channel ID enable and FIFO stream mode)
-	DEBUG_PRINT("Set FIFO_CFG0 to 0x60 (Channel ID enable and FIFO stream mode, set FIFO_SAMPLES to %d)\n", set_fifo_entries);
-	ret = adxl38x_accel_set_FIFO(set_fifo_entries,
-				     false, ADXL38X_FIFO_STREAM, chID_enable, false);
-
-	// Set INT0_MAP0 to 0x08 (FIFO_WATERMARK_INT0)
-	DEBUG_PRINT("Set INT0_MAP0 to 0x08 (FIFO_WATERMARK_INT0)\n");
-	register_value = 0x08;
-	ret = write_register( ADXL38X_INT0_MAP0, &register_value, 1);
-	if (ret) {
-        DEBUG_PRINT("Error: Error in setting INT0_MAP0\n");
-		goto error;
-    }
-
+    
 	while (true) {
         if (stdio_usb_connected()) {
             int c = getchar_timeout_us(1000);
@@ -182,6 +140,49 @@ int main() {
                     buffer[pos] = '\0';  // terminate string
                     if (strcmp(buffer, "START") == 0) {
 						gpio_put(LED_PIN, 0);
+						ret = adxl38x_soft_reset();
+						if (ret == -EAGAIN) {
+							DEBUG_PRINT("Error: Reset was not successful\n");
+							goto error;
+						}
+						else if (ret)
+							goto error;
+						ret = adxl38x_set_range(ADXL38X_OP_MODE,ADXL38X_MASK_RANGE, ADXL382_RANGE_15G);
+						if (ret)
+							goto error;
+						else
+							DEBUG_PRINT("ADXL382 range is set to 15g\n");
+						// FIFO sequence
+						// Put the part in standby mode, All configuration register writes must be completed with the ADXL382 in standby mode
+						ret = adxl38x_set_to_standby();
+						if (ret)
+							goto error;
+						
+
+						// Set DIG_EN register to 0x78 (Enable XYZ axes and FIFO enable)
+						DEBUG_PRINT("Enable XYZ axes and FIFO\n");
+						register_value = 0x78;
+						ret = write_register(ADXL38X_DIG_EN, 
+										&register_value, 1);
+						ret = read_register(ADXL38X_DIG_EN, 1, &register_value);
+						DEBUG_PRINT("DIG_EN register value: 0x%02X\n", register_value);
+						if (ret)
+							goto error;
+
+						// Set FIFO_CFG0 to 0x60 (Channel ID enable and FIFO stream mode)
+						DEBUG_PRINT("Set FIFO_CFG0 to 0x60 (Channel ID enable and FIFO stream mode, set FIFO_SAMPLES to %d)\n", set_fifo_entries);
+						ret = adxl38x_accel_set_FIFO(set_fifo_entries,
+										false, ADXL38X_FIFO_STREAM, chID_enable, false);
+
+						// Set INT0_MAP0 to 0x08 (FIFO_WATERMARK_INT0)
+						DEBUG_PRINT("Set INT0_MAP0 to 0x08 (FIFO_WATERMARK_INT0)\n");
+						register_value = 0x08;
+						ret = write_register( ADXL38X_INT0_MAP0, &register_value, 1);
+						if (ret) {
+							DEBUG_PRINT("Error: Error in setting INT0_MAP0\n");
+							goto error;
+						}
+
                         // Put the part in HP mode and read data when FIFO watermark pin is set
 						DEBUG_PRINT("Set HP mode\n");
 						ret = adxl38x_set_op_mode(ADXL38X_OP_MODE, ADXL38X_MASK_OP_MODE, ADXL38X_MODE_HP);
