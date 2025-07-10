@@ -196,7 +196,7 @@ int main() {
 						DEBUG_PRINT("Starting watermark check\n");
 						//reset count
 						count = 0;
-						while (count < 192000) { //loop until 32k x,y,z samples are obtained (2seconds at 16kHz)
+						while (count < 192000) { //loop until 62k x,y,z samples are obtained (4seconds at 16kHz)
 							
 							// Read status to assert if FIFO_WATERMARK bit set
 							ret = read_register(ADXL38X_STATUS0, 1, &status0);
