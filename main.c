@@ -54,8 +54,7 @@ uint8_t register_value;
 uint8_t status0;
 uint8_t fifo_status[2];
 uint8_t fifo_data[954];
-uint16_t set_fifo_entries = 0x3C; //  60 entries in FIFO
-// uint16_t set_fifo_entries = 0x5A; //  90 entries in FIFO
+uint16_t set_fifo_entries = 0x0C; //  12 entries in FIFO
 uint16_t fifo_entries = 2;
 bool chID_enable = true; //FIFO channel id
 uint8_t fifo_read_bytes;
@@ -93,8 +92,8 @@ int main() {
 
     DEBUG_PRINT("Hello, adxl382! Reading raw data from registers via SPI...\n");
 
-    // This example will use SPI0 at 5MHz.
-    spi_init(spi_default, 4000 * 1000);
+    // This example will use SPI0 at 8MHz.
+    spi_init(spi_default, 8000 * 1000);
     // Set SPI format
     spi_set_format( spi0,   // SPI instance
                     8,      // Number of bits per transfer
@@ -196,7 +195,7 @@ int main() {
 						DEBUG_PRINT("Starting watermark check\n");
 						//reset count
 						count = 0;
-						while (count < 192000) { //loop until 62k x,y,z samples are obtained (4seconds at 16kHz)
+						while (count < 192000) { //loop until 64k x,y,z samples are obtained (4seconds at 16kHz)
 							
 							// Read status to assert if FIFO_WATERMARK bit set
 							ret = read_register(ADXL38X_STATUS0, 1, &status0);
