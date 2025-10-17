@@ -137,7 +137,7 @@ int main() {
             if (c != PICO_ERROR_TIMEOUT) {
                 if (c == '\n' || c == '\r') {
                     buffer[pos] = '\0';  // terminate string
-                    if (strcmp(buffer, "START") == 0) {
+                    if (strcmp(buffer, "START") == 0) { //if START button is clicked on GUI, then START string is sent through UART to PICO
 						gpio_put(LED_PIN, 0);
 						ret = adxl38x_soft_reset();
 						if (ret == -EAGAIN) {

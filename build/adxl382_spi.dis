@@ -1392,7 +1392,7 @@ Disassembly of section .text:
 10000c44:	20001564 	.word	0x20001564
 10000c48:	4003c000 	.word	0x4003c000
 10000c4c:	10008654 	.word	0x10008654
-10000c50:	003d0900 	.word	0x003d0900
+10000c50:	007a1200 	.word	0x007a1200
 10000c54:	4003f004 	.word	0x4003f004
 10000c58:	4003d000 	.word	0x4003d000
 10000c5c:	4003e004 	.word	0x4003e004
@@ -1418,7 +1418,7 @@ Disassembly of section .text:
 10000cac:	2000108a 	.word	0x2000108a
 10000cb0:	200022f0 	.word	0x200022f0
 10000cb4:	000003ba 	.word	0x000003ba
-10000cb8:	0002edff 	.word	0x0002edff
+10000cb8:	000176ff 	.word	0x000176ff
 10000cbc:	100088cc 	.word	0x100088cc
 10000cc0:	100088d0 	.word	0x100088d0
 10000cc4:	1000862c 	.word	0x1000862c
@@ -18070,7 +18070,7 @@ Disassembly of section .data:
 2000108a:	                                         ..
 
 2000108c <set_fifo_entries>:
-2000108c:	                                         <.
+2000108c:	                                         ..
 
 2000108e <striped_spin_lock_num>:
 2000108e:	                                         ..

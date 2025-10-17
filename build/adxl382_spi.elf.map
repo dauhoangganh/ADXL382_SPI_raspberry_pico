@@ -3450,11 +3450,11 @@ LOAD C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.
                 0x10008a94      0x116 CMakeFiles/adxl382_spi.dir/adxl382.c.obj
  .rodata.main.str1.4
                 0x10008a94      0x305 CMakeFiles/adxl382_spi.dir/main.c.obj
- .rodata.__bi_108.0
+ .rodata.__bi_107.0
                 0x10008a94        0x8 CMakeFiles/adxl382_spi.dir/main.c.obj
  .rodata.str1.4
                 0x10008a9c        0x7 CMakeFiles/adxl382_spi.dir/main.c.obj
- .rodata.__bi_115.1
+ .rodata.__bi_114.1
                 0x10008a9c        0xc CMakeFiles/adxl382_spi.dir/main.c.obj
  .rodata.panic.str1.4
                 0x10008aa8       0x12 CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/pico_platform_panic/panic.c.obj
@@ -3541,9 +3541,9 @@ LOAD C:/Users/HDo/.pico-sdk/toolchain/14_2_Rel1/bin/../lib/gcc/arm-none-eabi/14.
 
 .binary_info    0x10008f54       0x28
  *(.binary_info.keep.*)
- .binary_info.keep.__bi_ptr115
+ .binary_info.keep.__bi_ptr114
                 0x10008f54        0x4 CMakeFiles/adxl382_spi.dir/main.c.obj
- .binary_info.keep.__bi_ptr108
+ .binary_info.keep.__bi_ptr107
                 0x10008f58        0x4 CMakeFiles/adxl382_spi.dir/main.c.obj
  .binary_info.keep.__bi_ptr84
                 0x10008f5c        0x4 CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/pico_standard_binary_info/standard_binary_info.c.obj

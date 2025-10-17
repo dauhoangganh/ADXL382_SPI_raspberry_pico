@@ -151,3 +151,9 @@
 6673	7263	7696014784603095	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj	4ec9dfbc36101fde
 6486	7355	7696014782764089	CMakeFiles/adxl382_spi.dir/C_/Users/HDo/.pico-sdk/sdk/2.1.1/lib/tinyusb/src/common/tusb_fifo.c.obj	97500c44ad095146
 2497	5877	7726316070789539	adxl382_spi.elf	d1155822f2b8d356
+233	3415	7823718048039802	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
+3417	12940	7823718079869801	adxl382_spi.elf	d1155822f2b8d356
+96	815	7823726275911739	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
+816	1904	7823726283094777	adxl382_spi.elf	d1155822f2b8d356
+191	3961	7823729136881454	CMakeFiles/adxl382_spi.dir/main.c.obj	79fd6889d96fd15a
+3961	8745	7823729174564309	adxl382_spi.elf	d1155822f2b8d356
