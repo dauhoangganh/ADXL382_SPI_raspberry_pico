@@ -55,7 +55,6 @@ uint8_t status0;
 uint8_t fifo_status[2];
 uint8_t fifo_data[954];
 uint16_t set_fifo_entries = 0x0C; //  12 entries in FIFO
-// uint16_t set_fifo_entries = 0x5A; //  90 entries in FIFO
 uint16_t fifo_entries = 2;
 bool chID_enable = true; //FIFO channel id
 uint8_t fifo_read_bytes;
