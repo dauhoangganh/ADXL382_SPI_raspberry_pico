@@ -28,7 +28,7 @@ If you want to see the data on TeraTerm:
 5. Open Tera Term and set up COM port
 6. See the data printed on teraterm
 
-   If you want to use the GUI to see data
+If you want to use the GUI to see data
 1. Flash the original main.c in this git repo to pico
 2. Go to this link and follow the instruction
  https://github.com/dauhoangganh/ADXL382_Pico_Streamlit_Example
