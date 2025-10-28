@@ -21,7 +21,7 @@ GND (pin 38)  -> GND on adxl382 board <br>
 
 # Run pico and read sensor data
 If you want to see the data on TeraTerm:
-1. comment out line 135-140 and 254-260 in main.c (these line are needed when using the associated GUI)
+1. comment out line 143-149 and 286-292 in main.c (these line are needed when using the associated GUI)
 2. Plug the micro-usb cable to Pico while pressing the BOOTSEL button, this sets the pico in bootsel mode
 3. Click run button at the bottom right corner of vs code to flash the main.uf2 file to pico
 4. Unplug and plug the cable to pico again
@@ -32,3 +32,11 @@ If you want to use the GUI to see data
 1. Flash the original main.c in this git repo to pico
 2. Go to this link and follow the instruction
  https://github.com/dauhoangganh/ADXL382_Pico_Streamlit_Example
+
+#Note when using ADXL382 (these info is not written in the datasheet)
+1. All register read and write transaction must be done before a new sample is written into FIFO otherwise that sample will lost. 
+<img width="1651" height="767" alt="image" src="https://github.com/user-attachments/assets/9d504c19-b084-4f3e-bbeb-f5766b925f90" />
+2. After burst reading FIFO data in FIFO stream mode, FIFO_mode shoud be set to 0 then set again to stream mode to avoid misalignment between read pointer and write pointer.
+<img width="1713" height="905" alt="image" src="https://github.com/user-attachments/assets/60336bce-139e-4300-95ec-571f0c0a0064" />
+
+
