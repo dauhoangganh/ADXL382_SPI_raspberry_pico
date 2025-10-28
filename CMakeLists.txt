@@ -43,7 +43,7 @@ add_executable(adxl382_spi
 pico_enable_stdio_uart(adxl382_spi 0)
 pico_enable_stdio_usb(adxl382_spi 1)
 # pull in common dependencies and additional spi hardware support
-target_link_libraries(adxl382_spi pico_stdlib hardware_spi)
+target_link_libraries(adxl382_spi pico_stdlib hardware_spi hardware_clocks)
 
 # create map/bin/hex file etc.
 pico_add_extra_outputs(adxl382_spi)

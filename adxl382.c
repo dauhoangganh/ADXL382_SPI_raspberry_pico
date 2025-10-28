@@ -66,10 +66,10 @@ int write_register(uint8_t reg, const uint8_t *data, uint8_t len) {
 		buf[i + 1] = data[i];
 	}
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 0);
-	// sleep_us(1);
+	sleep_us(1);
 	int ret = spi_write_blocking(spi_default, buf, len + 1);
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
-	// sleep_us(1);
+	sleep_us(1);
 	return ret == len + 1 ? 0 : -1;  // Return 0 on success, -1 on failure
 }
 int read_register(uint8_t reg, uint8_t len, uint8_t *buf ) {
@@ -78,8 +78,7 @@ int read_register(uint8_t reg, uint8_t len, uint8_t *buf ) {
 	// so we don't need to keep sending the register we want, just the first.
 	reg = (reg <<1) | 0x01;  // set read bit
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 0);
-	// printf("CS low\n");
-	// sleep_us(1);
+	sleep_us(1);
 	int ret = spi_write_blocking(spi_default, &reg, 1);
 	if (ret != 1) {
 		printf("Error: Could not write register address\n");
@@ -87,11 +86,9 @@ int read_register(uint8_t reg, uint8_t len, uint8_t *buf ) {
 		sleep_us(1);
 		return -1;  // Return -1 on failure
 	}
-	// sleep_ms(10);
 	ret = spi_read_blocking(spi_default, 0, buf, len);
 	gpio_put(PICO_DEFAULT_SPI_CSN_PIN, 1);
-	// printf("CS high\n");
-	// sleep_us(1);
+	sleep_us(1);
 	return ret == len ? 0 : -1;  // Return 0 on success, -1 on failure
 }
 
