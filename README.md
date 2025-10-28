@@ -33,7 +33,7 @@ If you want to use the GUI to see data
 2. Go to this link and follow the instruction
  https://github.com/dauhoangganh/ADXL382_Pico_Streamlit_Example
 
-#Note when using ADXL382 (these info is not written in the datasheet)
+# Note when using ADXL382 (these info is not written in the datasheet)
 1. All register read and write transaction must be done before a new sample is written into FIFO otherwise that sample will lost. 
 <img width="1651" height="767" alt="image" src="https://github.com/user-attachments/assets/9d504c19-b084-4f3e-bbeb-f5766b925f90" />
 2. After burst reading FIFO data in FIFO stream mode, FIFO_mode shoud be set to 0 then set again to stream mode to avoid misalignment between read pointer and write pointer.
